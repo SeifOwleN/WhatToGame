@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import gameServices from "../../services/gameServices";
-import { results } from "../../slices/gameSlice";
 import GamesList from "./gamesList";
 import Search from "./search";
+import { Games } from "../../types";
 
 const HomePage = () => {
   const games = useAppSelector((state) => state.search.value);
-  const [game, setGame] = useState();
+  const [game, setGame] = useState<Games>();
+
   useEffect(() => {
     const fun = async () => {
       try {
         const aloo = await gameServices.getNewGames();
         setGame(aloo);
+        console.log("aloo", aloo);
       } catch (err) {
         console.error(err);
       }
@@ -22,6 +24,7 @@ const HomePage = () => {
 
   const renderGames = () => {
     if (games.results) {
+      console.log("game", games);
       return (
         <div>
           <h2 className="text-3xl mb-10 font-inter font-bold">
@@ -58,9 +61,9 @@ const HomePage = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col items-end ml-96 mr-32">
+    <div className="flex flex-col items-end m-10 mr-32">
       <Search />
-      <div className="flex flex-wrap mt-10">{renderGames()}</div>
+      <div className="">{renderGames()}</div>
     </div>
   );
 };

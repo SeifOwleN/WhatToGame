@@ -1,19 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
-export interface results {
-  background_image: string;
-  name: string;
-  added: number;
-}
-
-export interface data {
-  count: number;
-  results: results;
-  user_platform: boolean;
-}
+import { Games } from "../types";
 
 export interface CounterState {
-  value: data;
+  value: Games;
 }
 
 const initialState: CounterState = {
@@ -24,7 +13,7 @@ export const searchSlice = createSlice({
   name: "Search",
   initialState,
   reducers: {
-    setSearch: (state, action: PayloadAction<data[]>) => {
+    setSearch: (state, action: PayloadAction<Games>) => {
       state.value = action.payload;
     },
   },
