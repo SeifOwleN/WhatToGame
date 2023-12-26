@@ -99,6 +99,6 @@ export interface Games {
   count?: number;
   next?: null | string;
   previous?: null | string;
-  results?: results[]; // You might want to create an interface for the items in the 'results' array
+  results: results[]; // You might want to create an interface for the items in the 'results' array
   user_platforms?: boolean;
 }

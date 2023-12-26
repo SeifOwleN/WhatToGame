@@ -9,9 +9,12 @@ import {
 import { results } from "../../types";
 
 const GamesList = ({ games }: { games: results }) => {
+ 
+
   const platformIcons = () => {
     const arr: string[] = [];
     const icons: JSX.Element[] = [];
+
     Object.entries(games.platforms).map(([_, { platform }]) => {
       platform.slug.includes("playstation") && arr.push("playstation");
       platform.slug.includes("xbox") && arr.push("xbox");
@@ -20,7 +23,6 @@ const GamesList = ({ games }: { games: results }) => {
       platform.slug.includes("android") && arr.push("android");
       platform.slug.includes("web") && arr.push("web");
     });
-
     if (arr.includes("playstation")) {
       icons.push(<FaPlaystation className="mb-1" />);
     }
