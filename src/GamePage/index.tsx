@@ -38,7 +38,7 @@ const GamePage = () => {
 				<CarouselContent>
 					<CarouselItem>
 						<img
-							className="w-[800px] h-[500px]"
+							className="object-cover h-[500px]"
 							src={game?.background_image}
 							alt={`background of ${game?.name}`}
 						/>
@@ -46,7 +46,7 @@ const GamePage = () => {
 					{gameSS?.results.map((image) => (
 						<CarouselItem key={image.id}>
 							<img
-								className="w-[800px] h-[500px]"
+								className="object-cover h-[500px]"
 								src={image.image}
 								alt={`screenshot no ${image.id}`}
 							/>

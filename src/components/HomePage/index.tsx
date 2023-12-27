@@ -60,7 +60,7 @@ const HomePage = () => {
 	};
 
 	const renderGames = () => {
-		if (game?.results.length !== 0) {
+		if (game) {
 			const search = new URLSearchParams(location.search);
 			const theGame = search.get("search");
 			console.log("game", game);
@@ -76,7 +76,7 @@ const HomePage = () => {
 					</div>
 
 					<div className="flex flex-wrap">
-						{Object.entries(game.results)
+						{Object.entries(game?.results)
 							.sort(([, gameA], [, gameB]) => {
 								return sort === "released"
 									? new Date(gameB.released).getTime() -

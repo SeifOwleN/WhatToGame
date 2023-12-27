@@ -24,7 +24,7 @@ const GamesList = ({ games }: { games: results }) => {
 			platform.slug.includes("web") && arr.push("web");
 		});
 		if (arr.includes("playstation")) {
-			icons.push(<FaPlaystation className="mb-1" />);
+			icons.push(<FaPlaystation key={"playstation"} className="mb-1" />);
 		}
 		if (arr.includes("xbox")) {
 			icons.push(<FaXbox className="mb-1" />);
