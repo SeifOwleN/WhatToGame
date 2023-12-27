@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import gameServices from "../../services/gameServices";
 import { Games } from "../../types";
 import {
@@ -16,7 +16,7 @@ import GamesList from "./gamesList";
 const HomePage = () => {
 	const location = useLocation();
 	const [game, setGame] = useState<Games>();
-	const [sort, setSort] = useState();
+	const [sort, setSort] = useState<string>();
 	console.log("sort", sort);
 
 	useEffect(() => {
@@ -42,7 +42,7 @@ const HomePage = () => {
 
 	const SortMenu = () => {
 		return (
-			<Select value={sort} onValueChange={setSort} className="absolute">
+			<Select value={sort} onValueChange={setSort}>
 				<SelectTrigger className="w-[200px]">
 					<SelectValue placeholder="Sort" />
 				</SelectTrigger>
@@ -60,10 +60,10 @@ const HomePage = () => {
 	};
 
 	const renderGames = () => {
-		if (game) {
+		if (game?.results.length !== 0) {
 			const search = new URLSearchParams(location.search);
 			const theGame = search.get("search");
-
+			console.log("game", game);
 			return (
 				<div className="flex flex-col">
 					<div className="head flex justify-between">
@@ -79,7 +79,8 @@ const HomePage = () => {
 						{Object.entries(game.results)
 							.sort(([, gameA], [, gameB]) => {
 								return sort === "released"
-									? new Date(gameB.released) - new Date(gameA.released)
+									? new Date(gameB.released).getTime() -
+											new Date(gameA.released).getTime()
 									: gameB[sort] - gameA[sort];
 							})
 							.map(([key, value]) => (
@@ -89,10 +90,12 @@ const HomePage = () => {
 				</div>
 			);
 		}
-		return <div className="mr-20"> No Results </div>;
+		return (
+			<h2 className="text-3xl mx-24 mt-2 font-inter font-bold">No Results</h2>
+		);
 	};
 
-	return <div className="flex flex-col items-end m-10 ">{renderGames()}</div>;
+	return <div className="flex flex-col m-10 ">{renderGames()}</div>;
 };
 
 export default HomePage;
