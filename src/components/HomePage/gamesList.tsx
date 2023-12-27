@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { results } from "../../types";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 
 const GamesList = ({ games }: { games: results }) => {
 	const platformIcons = () => {

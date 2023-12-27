@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import gameServices from "../../services/gameServices";
-import { Games } from "../../types";
+import { Games, results } from "../../types";
 import {
 	Select,
 	SelectContent,
@@ -16,7 +16,7 @@ import GamesList from "./gamesList";
 const HomePage = () => {
 	const location = useLocation();
 	const [game, setGame] = useState<Games>();
-	const [sort, setSort] = useState<string>();
+	const [sort, setSort] = useState<string | undefined>("");
 	console.log("sort", sort);
 
 	useEffect(() => {
@@ -81,7 +81,8 @@ const HomePage = () => {
 								return sort === "released"
 									? new Date(gameB.released).getTime() -
 											new Date(gameA.released).getTime()
-									: gameB[sort] - gameA[sort];
+									: // @ts-ignore
+									  gameB[sort] - gameA[sort];
 							})
 							.map(([key, value]) => (
 								<GamesList key={key} games={value} />

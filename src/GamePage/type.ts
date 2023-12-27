@@ -93,7 +93,7 @@ interface AddedByStatus {
 	playing: number;
 }
 
-interface GameData {
+export type GameData = {
 	id: number;
 	slug: string;
 	name: string;
@@ -146,9 +146,9 @@ interface GameData {
 	parent_platforms: Platform[];
 	platforms: PlatformObject[];
 	stores: Store[];
-}
+};
 
-interface GameScreenshot {
+interface ScreenshotApiResponse {
 	id: number;
 	image: string;
 	width: number;
@@ -156,11 +156,9 @@ interface GameScreenshot {
 	isDeleted: boolean;
 }
 
-interface ScreenshotApiResponse {
+export interface GameScreenshot {
 	count: number;
 	next: null | string;
 	previous: null | string;
-	results: GameScreenshot[];
+	results: ScreenshotApiResponse[];
 }
-
-export { GameData, ScreenshotApiResponse as GameScreenshot };
