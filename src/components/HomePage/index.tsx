@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import gameServices from "../../services/gameServices";
-import { Games, results } from "../../types";
+import { Games } from "../../types";
 import {
 	Select,
 	SelectContent,
