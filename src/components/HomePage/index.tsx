@@ -1,71 +1,98 @@
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useLocation, useSearchParams } from "react-router-dom";
 import gameServices from "../../services/gameServices";
-import GamesList from "./gamesList";
-import Search from "./search";
 import { Games } from "../../types";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "../ui/select";
+import GamesList from "./gamesList";
 
 const HomePage = () => {
-  const games = useAppSelector((state) => state.search.value);
-  const [game, setGame] = useState<Games>();
+	const location = useLocation();
+	const [game, setGame] = useState<Games>();
+	const [sort, setSort] = useState();
+	console.log("sort", sort);
 
-  useEffect(() => {
-    const fun = async () => {
-      try {
-        const aloo = await gameServices.getNewGames();
-        setGame(aloo);
-        console.log("aloo", aloo);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fun();
-  }, []);
+	useEffect(() => {
+		const fun = async () => {
+			const search = new URLSearchParams(location.search);
 
-  const renderGames = () => {
-    if (games.results) {
-      console.log("game", games);
-      return (
-        <div>
-          <h2 className="text-3xl mb-10 font-inter font-bold">
-            Search Results
-          </h2>
-          <div className="flex flex-wrap">
-            {Object.entries(games.results)
-              .sort((b, a) => {
-                return a[1].added - b[1].added;
-              })
-              .map(([key, value]) => (
-                <GamesList key={key} games={value} />
-              ))}
-          </div>
-        </div>
-      );
-    }
+			try {
+				if (search.get("search")) {
+					const gamesList = await gameServices.getGame(
+						search.get("search") as string,
+					);
+					setGame(gamesList);
+				} else {
+					const gamesList = await gameServices.getNewGames();
+					setGame(gamesList);
+				}
+			} catch (err) {
+				console.error(err);
+			}
+		};
+		fun();
+	}, [location]);
 
-    if (game) {
-      return (
-        <div className="flex flex-col">
-          <h2 className="text-3xl mb-10 font-inter font-bold">
-            Games that are known and loved
-          </h2>
-          <div className="flex flex-wrap">
-            {Object.entries(game.results).map(([key, value]) => (
-              <GamesList key={key} games={value} />
-            ))}
-          </div>
-        </div>
-      );
-    }
-    return <div className="mr-20"> No Results </div>;
-  };
+	const SortMenu = () => {
+		return (
+			<Select value={sort} onValueChange={setSort} className="absolute">
+				<SelectTrigger className="w-[200px]">
+					<SelectValue placeholder="Sort" />
+				</SelectTrigger>
+				<SelectContent>
+					<SelectGroup>
+						<SelectLabel>Sort By</SelectLabel>
+						<SelectItem value="rating">Rating</SelectItem>
+						<SelectItem value="added">Popularity</SelectItem>
+						<SelectItem value="released">Release Date</SelectItem>
+						<SelectItem value="playtime">PlayTime</SelectItem>
+					</SelectGroup>
+				</SelectContent>
+			</Select>
+		);
+	};
 
-  return (
-    <div className="flex flex-col items-end m-10 mr-32">
-      <Search />
-      <div className="">{renderGames()}</div>
-    </div>
-  );
+	const renderGames = () => {
+		if (game) {
+			const search = new URLSearchParams(location.search);
+			const theGame = search.get("search");
+
+			return (
+				<div className="flex flex-col">
+					<div className="head flex justify-between">
+						<h2 className="text-3xl mb-10 inline font-inter font-bold">
+							{theGame
+								? `Search Results for: ${theGame}`
+								: "Games that are known and loved"}
+						</h2>
+						{SortMenu()}
+					</div>
+
+					<div className="flex flex-wrap">
+						{Object.entries(game.results)
+							.sort(([, gameA], [, gameB]) => {
+								return sort === "released"
+									? new Date(gameB.released) - new Date(gameA.released)
+									: gameB[sort] - gameA[sort];
+							})
+							.map(([key, value]) => (
+								<GamesList key={key} games={value} />
+							))}
+					</div>
+				</div>
+			);
+		}
+		return <div className="mr-20"> No Results </div>;
+	};
+
+	return <div className="flex flex-col items-end m-10 ">{renderGames()}</div>;
 };
 
 export default HomePage;

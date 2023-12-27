@@ -56,8 +56,9 @@ const GamesList = ({ games }: { games: results }) => {
 					src={games.background_image}
 					className="min-h-[240px] object-cover"
 				/>
-				<CardContent className="flex items-center px-6 h-full text-xl text-white ">
+				<CardContent className="flex justify-center flex-col px-6 h-full text-xl text-white ">
 					<p>{games.name}</p>
+					<p className="text-xs text-gray-400">{games.rating}</p>
 				</CardContent>
 			</Card>
 		</Link>
