@@ -11,7 +11,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select";
-import GamesList from "./gamesList";
+import GamesCards from "./gamesCards";
 
 const HomePage = () => {
 	const location = useLocation();
@@ -44,13 +44,13 @@ const HomePage = () => {
 		return (
 			<Select value={sort} onValueChange={setSort}>
 				<SelectTrigger className="w-[200px]">
-					<SelectValue placeholder="Sort" />
+					<SelectValue defaultValue={"released"} />
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
 						<SelectLabel>Sort By</SelectLabel>
-						<SelectItem value="rating">Rating</SelectItem>
 						<SelectItem value="added">Popularity</SelectItem>
+						<SelectItem value="rating">Rating</SelectItem>
 						<SelectItem value="released">Release Date</SelectItem>
 						<SelectItem value="playtime">PlayTime</SelectItem>
 					</SelectGroup>
@@ -85,7 +85,7 @@ const HomePage = () => {
 									  gameB[sort] - gameA[sort];
 							})
 							.map(([key, value]) => (
-								<GamesList key={key} games={value} />
+								<GamesCards key={key} games={value} />
 							))}
 					</div>
 				</div>

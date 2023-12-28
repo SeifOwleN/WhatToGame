@@ -78,6 +78,7 @@ module.exports = {
 				raleway: ["Raleway", "sans-serif"],
 				karla: ["Karla", "sans-serif"],
 				notable: ["Notable", "sans-serif"],
+				roboto: ["Roboto", "sans-serif"],
 			},
 		},
 	},
