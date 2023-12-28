@@ -28,21 +28,21 @@ const GamePage = () => {
 		getGame();
 	}, [id]);
 
-	const renderStores = () => {
-		if (game) {
-			const stores = game?.stores;
-			return (
-				<div className="">
-					<h2>Available On:</h2>
-					<div className="flex">
-						{stores.map(({ store }) => (
-							<>{store.name}</>
-						))}
-					</div>
-				</div>
-			);
-		}
-	};
+	// const renderStores = () => {
+	// 	if (game) {
+	// 		const stores = game?.stores;
+	// 		return (
+	// 			<div className="">
+	// 				<h2>Available On:</h2>
+	// 				<div className="flex">
+	// 					{stores.map(({ store }) => (
+	// 						<>{store.name}</>
+	// 					))}
+	// 				</div>
+	// 			</div>
+	// 		);
+	// 	}
+	// };
 
 	return (
 		<div className="xl:flex block xl:ml-16 sm:m-4">
