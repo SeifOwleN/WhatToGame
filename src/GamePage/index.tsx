@@ -57,7 +57,7 @@ const GamePage = () => {
 					<p className=" font-extrabold text-5xl">{game?.name}</p>
 
 					<div className="text-6xl gap-3 items-center text-gray-300 flex">
-						<Platforms games={game} />
+						<Platforms games={game as GameData} />
 					</div>
 				</div>
 				<p className="text-gray-400 m-2">

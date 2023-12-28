@@ -1,4 +1,3 @@
-import { results } from "@/types";
 import { FaAndroid, FaGlobe, FaXbox } from "react-icons/fa";
 import {
 	SiIos,
@@ -9,10 +8,10 @@ import {
 	SiPlaystation4,
 	SiPlaystation5,
 	SiWindows10,
-	SiWindows11,
 } from "react-icons/si";
+import { GameData } from "./type";
 
-const Platforms = ({ games }: { games: results }) => {
+const Platforms = ({ games }: { games: GameData }) => {
 	const arr: string[] = [];
 	const icons: JSX.Element[] = [];
 
