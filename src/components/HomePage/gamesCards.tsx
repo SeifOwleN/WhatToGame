@@ -5,8 +5,8 @@ import { Card, CardContent } from "../ui/card";
 
 const GamesCards = ({ games }: { games: results }) => {
 	return (
-		<Link to={`/game/${games.id}`}>
-			<Card className="w-96 relative mt-10 h-[350px] mr-10 flex flex-col rounded-3xl overflow-hidden hover:transform hover:scale-110 transition-transform ">
+		<Link className="mt-10 sm:mr-10" to={`/game/${games.id}`}>
+			<Card className="sm:w-96 relative h-[350px] flex flex-col rounded-3xl overflow-hidden hover:transform hover:scale-110 transition-transform ">
 				<div className="absolute right-3 mix-blend-difference top-2">
 					<PlatformIcons games={games} />
 				</div>

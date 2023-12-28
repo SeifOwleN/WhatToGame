@@ -68,9 +68,7 @@ const HomePage = () => {
 				<div className="flex flex-col">
 					<div className="head flex justify-between">
 						<h2 className="text-3xl mb-10 inline font-inter font-bold">
-							{theGame
-								? `Search Results for: ${theGame}`
-								: "Games that are known and loved"}
+							{theGame ? `Search Results for: ${theGame}` : "Popular Games"}
 						</h2>
 						{SortMenu()}
 					</div>
@@ -96,7 +94,7 @@ const HomePage = () => {
 		);
 	};
 
-	return <div className="flex flex-col m-10 ">{renderGames()}</div>;
+	return <div className="flex flex-col sm:m-10 m-2 ">{renderGames()}</div>;
 };
 
 export default HomePage;

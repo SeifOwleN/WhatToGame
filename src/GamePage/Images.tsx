@@ -17,12 +17,12 @@ const Images = ({
 	return (
 		<Carousel
 			plugins={[WheelGesturesPlugin(), Autoplay({ delay: 10000 })]}
-			className="w-[800px]"
+			className="xl:w-[700px] w-full aspect-video"
 		>
 			<CarouselContent>
 				<CarouselItem>
 					<img
-						className="rounded-lg object-cover h-[500px]"
+						className="sm:rounded-lg object-cover "
 						src={game?.background_image}
 						alt={`background of ${game?.name}`}
 					/>
@@ -30,15 +30,15 @@ const Images = ({
 				{gameSS?.results.map((image) => (
 					<CarouselItem key={image.id}>
 						<img
-							className="object-cover h-[500px]"
+							className="sm:rounded-lg object-cover"
 							src={image.image}
 							alt={`screenshot no ${image.id}`}
 						/>
 					</CarouselItem>
 				))}
 			</CarouselContent>
-			<CarouselPrevious />
-			<CarouselNext />
+			<CarouselPrevious className="hidden xl:flex" />
+			<CarouselNext className="hidden xl:flex" />
 		</Carousel>
 	);
 };
