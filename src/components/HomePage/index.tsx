@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import gameServices from "../../services/gameServices";
@@ -16,9 +17,10 @@ import GamesCards from "./gamesCards";
 const HomePage = () => {
 	const location = useLocation();
 	const [game, setGame] = useState<Games>();
-	const [sort, setSort] = useState<string | undefined>("");
-	console.log("sort", sort);
+	const [sort, setSort] = useState<string | undefined>("added");
+	const [isEndOfPage, setIsEndOfPage] = useState(false);
 
+	// useEffect to fetch the searched games from the api when location changes
 	useEffect(() => {
 		const fun = async () => {
 			const search = new URLSearchParams(location.search);
@@ -40,11 +42,48 @@ const HomePage = () => {
 		fun();
 	}, [location]);
 
+	useEffect(() => {
+		const fun = async () => {
+			console.log("isEndOfPage", isEndOfPage);
+			if (isEndOfPage && game) {
+				const { data }: { data: Games } = await axios.get(game?.next as string);
+				setGame({ ...data, results: game.results.concat(data.results) });
+				console.log("game", game);
+				setIsEndOfPage(false);
+			}
+		};
+		fun();
+	}, [isEndOfPage, game]);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const windowHeight = window.innerHeight;
+			const documentHeight = document.documentElement.scrollHeight;
+			const scrollTop = window.scrollY;
+
+			// Check if the user has scrolled to the end of the page
+			if (windowHeight + scrollTop === documentHeight) {
+				setIsEndOfPage(true);
+			} else {
+				setIsEndOfPage(false);
+			}
+		};
+
+		// Attach the scroll event listener
+		window.addEventListener("scroll", handleScroll);
+
+		// Cleanup the event listener on component unmount
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+
+	// sort games select element
 	const SortMenu = () => {
 		return (
 			<Select value={sort} onValueChange={setSort}>
-				<SelectTrigger className="w-[200px]">
-					<SelectValue defaultValue={"released"} />
+				<SelectTrigger className="w-[200px] text-white">
+					<SelectValue placeholder="aloo" />
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
@@ -59,11 +98,11 @@ const HomePage = () => {
 		);
 	};
 
+	// function responsible of rendering the games
 	const renderGames = () => {
 		if (game) {
 			const search = new URLSearchParams(location.search);
 			const theGame = search.get("search");
-			console.log("game", game);
 			return (
 				<div className="flex flex-col">
 					<div className="head flex justify-between">
@@ -94,7 +133,7 @@ const HomePage = () => {
 		);
 	};
 
-	return <div className="flex flex-col sm:m-10 m-2 ">{renderGames()}</div>;
+	return <div className="flex flex-col sm:m-10 m-2">{renderGames()}</div>;
 };
 
 export default HomePage;

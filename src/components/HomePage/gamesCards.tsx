@@ -18,7 +18,7 @@ const GamesCards = ({ games }: { games: results }) => {
 				<CardContent className="flex justify-center flex-col px-6 h-full text-xl text-white ">
 					<p>{games.name}</p>
 					<p className="text-xs text-gray-400">
-						{games.rating} · {games.released.slice(0, 4)}{" "}
+						{games.rating} · {games.released?.slice(0, 4)}{" "}
 					</p>
 				</CardContent>
 			</Card>

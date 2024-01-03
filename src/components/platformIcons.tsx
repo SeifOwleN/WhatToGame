@@ -12,14 +12,16 @@ const PlatformIcons = ({ games }: { games: results }) => {
 	const arr: string[] = [];
 	const icons: JSX.Element[] = [];
 
-	Object.entries(games.platforms).map(([_, { platform }]) => {
-		platform.slug.includes("playstation") && arr.push("playstation");
-		platform.slug.includes("xbox") && arr.push("xbox");
-		platform.slug.includes("pc") && arr.push("pc");
-		platform.slug.includes("ios") && arr.push("ios");
-		platform.slug.includes("android") && arr.push("android");
-		platform.slug.includes("web") && arr.push("web");
-	});
+	if (games.platforms) {
+		Object.entries(games.platforms).map(([_, { platform }]) => {
+			platform.slug.includes("playstation") && arr.push("playstation");
+			platform.slug.includes("xbox") && arr.push("xbox");
+			platform.slug.includes("pc") && arr.push("pc");
+			platform.slug.includes("ios") && arr.push("ios");
+			platform.slug.includes("android") && arr.push("android");
+			platform.slug.includes("web") && arr.push("web");
+		});
+	}
 	if (arr.includes("playstation")) {
 		icons.push(<FaPlaystation key={"playstation"} className="mb-1" />);
 	}

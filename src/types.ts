@@ -33,7 +33,7 @@ export interface results {
 	saturated_color: string;
 	dominant_color: string;
 	platforms: {
-		platform: {
+		platform?: {
 			id: number;
 			name: string;
 			slug: string;
