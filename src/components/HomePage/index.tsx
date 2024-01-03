@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { HiArrowUp } from "react-icons/hi2";
 import { useLocation } from "react-router-dom";
 import gameServices from "../../services/gameServices";
 import { Games } from "../../types";
@@ -19,6 +20,7 @@ const HomePage = () => {
 	const [game, setGame] = useState<Games>();
 	const [sort, setSort] = useState<string | undefined>("added");
 	const [isEndOfPage, setIsEndOfPage] = useState(false);
+	const [topVisible, setTopVisible] = useState(false);
 
 	// useEffect to fetch the searched games from the api when location changes
 	useEffect(() => {
@@ -67,6 +69,13 @@ const HomePage = () => {
 			} else {
 				setIsEndOfPage(false);
 			}
+
+			// Check if the user has scrolled down enough to show the button
+			if (scrollTop > 200) {
+				setTopVisible(true);
+			} else {
+				setTopVisible(false);
+			}
 		};
 
 		// Attach the scroll event listener
@@ -82,7 +91,7 @@ const HomePage = () => {
 	const SortMenu = () => {
 		return (
 			<Select value={sort} onValueChange={setSort}>
-				<SelectTrigger className="w-[200px] text-white">
+				<SelectTrigger className="w-[200px]">
 					<SelectValue placeholder="aloo" />
 				</SelectTrigger>
 				<SelectContent>
@@ -133,7 +142,27 @@ const HomePage = () => {
 		);
 	};
 
-	return <div className="flex flex-col sm:m-10 m-2">{renderGames()}</div>;
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
+	};
+
+	return (
+		<div className="flex flex-col sm:m-10 m-2 relative">
+			{renderGames()}{" "}
+			{topVisible && (
+				<button
+					type="button"
+					className="fixed bottom-8 right-8 sm:bottom-12 sm:right-12 bg-teal-800 flex justify-center items-center w-12 h-12 rounded-full"
+					onClick={scrollToTop}
+				>
+					<HiArrowUp />
+				</button>
+			)}
+		</div>
+	);
 };
 
 export default HomePage;

@@ -9,7 +9,7 @@ function App() {
 	return (
 		<Router>
 			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-				<div className="text-white ">
+				<div className="dark:text-white ">
 					<div className="h-full">
 						<Navbar />
 						<Routes>

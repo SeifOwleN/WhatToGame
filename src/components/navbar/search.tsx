@@ -15,8 +15,8 @@ const SearchBar = () => {
 		<div className="flex-1">
 			<form onSubmit={searchxdd}>
 				<Input
-					className="w-full h-15 rounded-lg border-0 px-5 text-lg text-white  "
-					placeholder="Type anything lil nigga"
+					className="w-full h-15 rounded-lg border-0 px-5 text-lg dark:text-white  "
+					placeholder="Search Your Favorite Game"
 					value={game}
 					onChange={(x) => setGame(x.target.value)}
 				/>

@@ -53,7 +53,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<div className="sticky top-0 bg-black z-10 min-h-[100px]  ">
+		<div className="sticky top-0 bg-white z-10 min-h-[100px] dark:bg-black">
 			<div className="h-1/12 flex pt-9 justify-between md:ml-24 sm:justify-normal mx-6 items-center">
 				<Link to={"/"} className="text-4xl text-red-500 font-notable">
 					WTG
@@ -70,7 +70,7 @@ const Navbar = () => {
 				</div>
 				<div
 					id="RightSide"
-					className="flex-0 lg:block hidden font-inter text-white text-xl"
+					className="flex-0 lg:block hidden font-inter dark:text-white text-xl"
 				>
 					<a className="mr-28" href="https://">
 						Placeholder

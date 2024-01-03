@@ -19,6 +19,15 @@ const getGameByID = async (gameID: string) => {
 	return games;
 };
 
+const getGameVideo = async (gameID: string) => {
+	const vid = await axios
+		.get(`http://localhost:3000/api/video/${gameID} `)
+		.then((xdd) => xdd.data);
+	console.log(vid);
+
+	return vid;
+};
+
 const getGameScreenShots = async (gameID: string) => {
 	const games = await axios
 		.get(
@@ -33,4 +42,10 @@ const getNewGames = async () => {
 	return games;
 };
 
-export default { getGame, getNewGames, getGameByID, getGameScreenShots };
+export default {
+	getGame,
+	getNewGames,
+	getGameByID,
+	getGameScreenShots,
+	getGameVideo,
+};
