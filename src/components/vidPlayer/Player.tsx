@@ -172,13 +172,9 @@ const Player = ({ videoData }: { videoData: Movie }) => {
 				muted
 			>
 				{quality === "max" ? (
-					<source
-						src="../../../التحف العشرون المفضلة لدي! [ip3EJ57EL1Q].mp4"
-						type="video/mp4"
-						id="1080"
-					/>
+					<source src={videoData.data.max} type="video/mp4" id="1080" />
 				) : (
-					<source src="../../../output.mp4" type="video/mp4" id="480" />
+					<source src={videoData.data[480]} type="video/mp4" id="480" />
 				)}
 			</video>
 			{Controls()}
