@@ -4,6 +4,15 @@ import { HiArrowUp } from "react-icons/hi2";
 import { useLocation } from "react-router-dom";
 import gameServices from "../../services/gameServices";
 import { Games } from "../../types";
+// import {
+// 	DropdownMenu,
+// 	DropdownMenuCheckboxItem,
+// 	DropdownMenuContent,
+// 	DropdownMenuGroup,
+// 	DropdownMenuLabel,
+// 	DropdownMenuSeparator,
+// 	DropdownMenuTrigger,
+// } from "../ui/dropdown-menu";
 import {
 	Select,
 	SelectContent,
@@ -100,7 +109,13 @@ const HomePage = () => {
 					<SelectValue placeholder="aloo" />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectGroup>
+					<SelectGroup
+						ref={(ref) =>
+							ref?.addEventListener("touchend", (e) => {
+								e.preventDefault();
+							})
+						}
+					>
 						<SelectLabel>Sort By</SelectLabel>
 						<SelectItem value="added">Popularity</SelectItem>
 						<SelectItem value="rating">Rating</SelectItem>
@@ -111,6 +126,23 @@ const HomePage = () => {
 			</Select>
 		);
 	};
+
+	// const FilterPlatform = () => {
+	// 	return (
+	// 		<DropdownMenu>
+	// 			<DropdownMenuTrigger className="">
+	// 				<div className="w-20 bg-pink-700">xDDMRO</div>
+	// 			</DropdownMenuTrigger>
+	// 			<DropdownMenuContent>
+	// 				<DropdownMenuLabel>Playstation</DropdownMenuLabel>
+	// 				<DropdownMenuSeparator />
+	// 				<DropdownMenuGroup>
+	// 					<DropdownMenuCheckboxItem>Playstation</DropdownMenuCheckboxItem>
+	// 				</DropdownMenuGroup>
+	// 			</DropdownMenuContent>
+	// 		</DropdownMenu>
+	// 	);
+	// };
 
 	// function responsible of rendering the games
 	const renderGames = () => {
@@ -123,7 +155,7 @@ const HomePage = () => {
 						<h2 className="text-3xl mb-10 inline font-inter font-bold">
 							{theGame ? `Search Results for: ${theGame}` : "Popular Games"}
 						</h2>
-						{SortMenu()}
+						<div className="flex gap-40 items-center">{SortMenu()}</div>
 					</div>
 
 					<div className="flex flex-wrap">
@@ -158,12 +190,13 @@ const HomePage = () => {
 		<div className="flex flex-col sm:m-10 m-2 relative">
 			{renderGames()}{" "}
 			{topVisible && (
-				<div
+				<button
+					type="button"
 					className="fixed bottom-8 right-8 sm:bottom-12 sm:right-12 bg-teal-800 flex justify-center items-center w-12 h-12 rounded-full cursor-pointer"
 					onClick={scrollToTop}
 				>
 					<HiArrowUp />
-				</div>
+				</button>
 			)}
 		</div>
 	);

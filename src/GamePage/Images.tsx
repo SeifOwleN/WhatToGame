@@ -30,7 +30,7 @@ const Images = ({
 		<>
 			<Carousel
 				plugins={[WheelGesturesPlugin(), Autoplay({ delay: 10000 })]}
-				className="xl:w-[700px] w-full aspect-video"
+				className="xl:w-[750px] w-full aspect-video"
 			>
 				<CarouselContent>
 					{videoURL?.[0] ? (

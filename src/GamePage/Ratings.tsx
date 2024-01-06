@@ -2,7 +2,7 @@ import { GameData } from "./type";
 
 const Ratings = ({ game }: { game: GameData | undefined }) => {
 	return (
-		<div className="flex sm:flex-row flex-col items-center ratings sm:justify-around text-white">
+		<div className="flex sm:flex-row 2xl:flex-row xl:flex-col flex-col items-center ratings sm:justify-around text-white">
 			{game?.metacritic && (
 				<a
 					href={game?.metacritic_url}
