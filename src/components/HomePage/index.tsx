@@ -158,13 +158,12 @@ const HomePage = () => {
 		<div className="flex flex-col sm:m-10 m-2 relative">
 			{renderGames()}{" "}
 			{topVisible && (
-				<button
-					type="button"
-					className="fixed bottom-8 right-8 sm:bottom-12 sm:right-12 bg-teal-800 flex justify-center items-center w-12 h-12 rounded-full"
+				<div
+					className="fixed bottom-8 right-8 sm:bottom-12 sm:right-12 bg-teal-800 flex justify-center items-center w-12 h-12 rounded-full cursor-pointer"
 					onClick={scrollToTop}
 				>
 					<HiArrowUp />
-				</button>
+				</div>
 			)}
 		</div>
 	);
