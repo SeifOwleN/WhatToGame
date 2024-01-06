@@ -35,7 +35,9 @@ const getGameSeries = async (gameID: number | string) => {
 
 const getGameVideo = async (gameID: number | string) => {
 	const vid = await axios
-		.get(`http://localhost:3000/api/video/${gameID}`)
+		.get(
+			`https://rawg.io/api/games/${gameID}/movies?key=732af35de7c848489a06ffe4343ee934`,
+		)
 		.then((xdd) => xdd.data);
 	console.log(vid);
 
@@ -44,7 +46,9 @@ const getGameVideo = async (gameID: number | string) => {
 
 const getGameAchievements = async (gameID: number | string) => {
 	const achievements = await axios
-		.get(`http://localhost:3000/api/achievements/${gameID}`)
+		.get(
+			`https://rawg.io/api/games/${gameID}/achievements?key=732af35de7c848489a06ffe4343ee934`,
+		)
 		.then((xdd) => xdd.data);
 	console.log(achievements);
 

@@ -1,4 +1,3 @@
-import { log } from "console";
 import cors from "cors";
 import express, { response } from "express";
 const app = express();
