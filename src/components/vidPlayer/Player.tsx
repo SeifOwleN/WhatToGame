@@ -169,6 +169,7 @@ const Player = ({ videoData }: { videoData: Movie }) => {
 				preload="none"
 				ref={videoRef}
 				className="w-full h-full"
+				poster={videoData.preview}
 				muted
 			>
 				{quality === "max" ? (

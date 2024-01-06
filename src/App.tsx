@@ -8,7 +8,7 @@ import { ThemeProvider } from "./components/theme-provider";
 function App() {
 	return (
 		<Router>
-			<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+			<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
 				<div className="dark:text-white ">
 					<div className="h-full">
 						<Navbar />
