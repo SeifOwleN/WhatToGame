@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl =
-	"https://rawg.io/api/games?key=6475c8f246db4df1933be6aceaa55806";
+	"https://rawg.io/api/games?key=732af35de7c848489a06ffe4343ee934";
 
 const getGame = async (gameName: string) => {
 	const games = await axios
@@ -13,15 +13,15 @@ const getGame = async (gameName: string) => {
 const getGameByID = async (gameID: string) => {
 	const games = await axios
 		.get(
-			`https://rawg.io/api/games/${gameID}?key=6475c8f246db4df1933be6aceaa55806`,
+			`https://rawg.io/api/games/${gameID}?key=732af35de7c848489a06ffe4343ee934`,
 		)
 		.then((xdd) => xdd.data);
 	return games;
 };
 
-const getGameVideo = async (gameID: string) => {
+const getGameVideo = async (gameID: number) => {
 	const vid = await axios
-		.get(`http://localhost:3000/api/video/${gameID} `)
+		.get(`http://localhost:3000/api/video/${gameID}`)
 		.then((xdd) => xdd.data);
 	console.log(vid);
 
@@ -31,7 +31,7 @@ const getGameVideo = async (gameID: string) => {
 const getGameScreenShots = async (gameID: string) => {
 	const games = await axios
 		.get(
-			`https://rawg.io/api/games/${gameID}/screenshots?key=6475c8f246db4df1933be6aceaa55806`,
+			`https://rawg.io/api/games/${gameID}/screenshots?key=732af35de7c848489a06ffe4343ee934`,
 		)
 		.then((xdd) => xdd.data);
 	return games;

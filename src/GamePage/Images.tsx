@@ -5,10 +5,11 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "@/components/ui/carousel";
+import Player from "@/components/vidPlayer/Player";
+import gameServices from "@/services/gameServices";
+import { Movie } from "@/types";
 import Autoplay from "embla-carousel-autoplay";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
-
-import gameServices from "@/services/gameServices";
 import { useEffect, useState } from "react";
 import { GameData, GameScreenshot } from "./type";
 
@@ -16,14 +17,12 @@ const Images = ({
 	game,
 	gameSS,
 }: { game: GameData; gameSS: GameScreenshot }) => {
-	const [videoURL, setVideoURL] = useState("");
+	const [videoURL, setVideoURL] = useState<Movie[]>();
 
 	useEffect(() => {
 		(async () => {
-			const video = await gameServices.getGameVideo(game.id);
-			console.log(video.results[0].data.max);
-
-			setVideoURL(video.results[0]);
+			const video = await gameServices.getGameVideo(game?.id);
+			setVideoURL(video.results);
 		})();
 	}, [game]);
 
@@ -34,20 +33,11 @@ const Images = ({
 				className="xl:w-[700px] w-full aspect-video"
 			>
 				<CarouselContent>
-					{videoURL && (
+					{videoURL ? (
 						<CarouselItem>
-							<video
-								id="my-player"
-								className="video-js"
-								preload="auto"
-								poster={videoURL.preview}
-								data-setup="{}"
-								controls
-							>
-								xddMORS
-							</video>
+							<Player videoData={videoURL[0]} />
 						</CarouselItem>
-					)}
+					) : null}
 
 					<CarouselItem>
 						<img
@@ -63,6 +53,11 @@ const Images = ({
 								src={image.image}
 								alt={`screenshot no ${image.id}`}
 							/>
+						</CarouselItem>
+					))}
+					{videoURL?.map((xdd) => (
+						<CarouselItem key={xdd.id} className="relative">
+							<Player videoData={xdd} />
 						</CarouselItem>
 					))}
 				</CarouselContent>

@@ -102,3 +102,20 @@ export interface Games {
 	results: results[]; // You might want to create an interface for the items in the 'results' array
 	user_platforms?: boolean;
 }
+
+export interface Movie {
+	id: number;
+	name: string;
+	preview: string;
+	data: {
+		"480": string;
+		max: string;
+	};
+}
+
+interface MovieList {
+	count: number;
+	next: null | string; // You can replace `any` with the specific type if needed
+	previous: null | string; // You can replace `any` with the specific type if needed
+	results: Movie[];
+}

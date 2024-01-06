@@ -58,13 +58,13 @@ const GamePage = () => {
 						<Platforms games={game as GameData} />
 					</div>
 				</div>
-				<p className="text-gray-400 m-2">
+				<div className="text-gray-400 m-2">
 					{game
 						? parse(
 								game.description.slice(0, game.description.indexOf("Español")),
 						  )
 						: null}
-				</p>
+				</div>
 
 				<div className="flex m-4 gap-4 justify-between">
 					<p>Published By: {game?.publishers[0].name}</p>
