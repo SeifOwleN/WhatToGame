@@ -21,14 +21,26 @@ import { Slider } from "../ui/slider";
 
 const Player = ({ videoData }: { videoData: Movie }) => {
 	const videoRef = useRef<HTMLVideoElement>(null);
+	const [quality, setQuality] = useState<string>("");
+
+	useEffect(() => {
+		if (videoData.data) {
+			setQuality("480");
+		}
+	}, [videoData]);
 
 	const Controls = () => {
 		const [isPlayed, setIsPlayed] = useState<boolean>(false);
 		const [isMuted, setIsMuted] = useState<boolean>(true);
-		const [progress, setProgress] = useState<number[]>([20]);
-		const [progressX, setProgressX] = useState<number[]>([20]);
-		const [quality, setQuality] = useState<string>();
+		const [progress, setProgress] = useState<number[]>([0]);
+		const [progressX, setProgressX] = useState<number[]>([0]);
 		const [dropdownOpened, setDropdownOpened] = useState<boolean>(false);
+
+		useEffect(() => {
+			if (videoRef.current && quality) {
+				videoRef.current.load();
+			}
+		}, [quality]);
 
 		useEffect(() => {
 			if (videoRef?.current?.currentTime && progressX) {
@@ -128,8 +140,8 @@ const Player = ({ videoData }: { videoData: Movie }) => {
 								value={quality}
 								onValueChange={(e) => setQuality(e)}
 							>
+								<DropdownMenuRadioItem value="max">1080</DropdownMenuRadioItem>
 								<DropdownMenuRadioItem value="480">480</DropdownMenuRadioItem>
-								<DropdownMenuRadioItem value="1080">1080</DropdownMenuRadioItem>
 							</DropdownMenuRadioGroup>
 						</DropdownMenuContent>
 					</DropdownMenu>
@@ -156,15 +168,18 @@ const Player = ({ videoData }: { videoData: Movie }) => {
 				id="my-player"
 				preload="none"
 				ref={videoRef}
-				className="w-full h-auto"
+				className="w-full h-full"
 				muted
 			>
-				<source
-					src="../../../التحف العشرون المفضلة لدي! [ip3EJ57EL1Q].mp4"
-					type="video/mp4"
-					id="1080"
-				/>
-				<source src="../../../output.mp4" type="video/mp4" id="480" />
+				{quality === "max" ? (
+					<source
+						src="../../../التحف العشرون المفضلة لدي! [ip3EJ57EL1Q].mp4"
+						type="video/mp4"
+						id="1080"
+					/>
+				) : (
+					<source src="../../../output.mp4" type="video/mp4" id="480" />
+				)}
 			</video>
 			{Controls()}
 		</>

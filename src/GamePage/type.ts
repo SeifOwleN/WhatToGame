@@ -162,3 +162,18 @@ export interface GameScreenshot {
 	previous: null | string;
 	results: ScreenshotApiResponse[];
 }
+
+export interface Achievement {
+	id: number;
+	name: string;
+	description: string;
+	image: string;
+	percent: string;
+}
+
+export interface AchievementList {
+	count: number;
+	next: string | null;
+	previous: string | null;
+	results: Achievement[];
+}

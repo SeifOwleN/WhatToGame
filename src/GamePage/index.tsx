@@ -2,9 +2,11 @@ import gameServices from "@/services/gameServices";
 import parse from "html-react-parser";
 import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import AchievementeButton from "./Achivements/button";
 import Images from "./Images";
 import Platforms from "./Platforms";
 import Ratings from "./Ratings";
+import Series from "./Series";
 import { GameData, GameScreenshot } from "./type";
 
 const GamePage = () => {
@@ -29,27 +31,22 @@ const GamePage = () => {
 		getGame();
 	}, [id]);
 
-	// const renderStores = () => {
-	// 	if (game) {
-	// 		const stores = game?.stores;
-	// 		return (
-	// 			<div className="">
-	// 				<h2>Available On:</h2>
-	// 				<div className="flex">
-	// 					{stores.map(({ store }) => (
-	// 						<>{store.name}</>
-	// 					))}
-	// 				</div>
-	// 			</div>
-	// 		);
-	// 	}
-	// };
-
 	return (
 		<div className="xl:flex block xl:ml-16 sm:m-4">
-			<div>
+			<div className="flex flex-col">
 				<h2 className="text-2xl font-bold mb-4">Game Preview</h2>
 				<Images gameSS={gameSS as GameScreenshot} game={game as GameData} />
+				<div className="flex justify-evenly mt-4 ">
+					{game?.game_series_count && (
+						<Series game={game} className="w-64 h-16" />
+					)}
+					{game?.achievements_count && (
+						<AchievementeButton
+							className="w-64 h-16"
+							noAchieve={game.achievements_count}
+						/>
+					)}
+				</div>
 			</div>
 			<div className="xl:ml-12 xl:mr-4 mt-6 content ">
 				<div className="lg:flex justify-between mr-4">

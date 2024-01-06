@@ -33,7 +33,7 @@ const Images = ({
 				className="xl:w-[700px] w-full aspect-video"
 			>
 				<CarouselContent>
-					{videoURL ? (
+					{videoURL?.[0] ? (
 						<CarouselItem>
 							<Player videoData={videoURL[0]} />
 						</CarouselItem>
@@ -47,19 +47,21 @@ const Images = ({
 						/>
 					</CarouselItem>
 					{gameSS?.results.map((image) => (
-						<CarouselItem key={image.id}>
+						<CarouselItem key={image.id} className="object-cover">
 							<img
-								className="sm:rounded-lg object-cover"
+								className="sm:rounded-lg h-full"
 								src={image.image}
 								alt={`screenshot no ${image.id}`}
 							/>
 						</CarouselItem>
 					))}
-					{videoURL?.map((xdd) => (
-						<CarouselItem key={xdd.id} className="relative">
-							<Player videoData={xdd} />
-						</CarouselItem>
-					))}
+					{videoURL?.map((xdd, index) =>
+						index === 0 ? null : (
+							<CarouselItem key={xdd.id} className="relative">
+								<Player videoData={xdd} />
+							</CarouselItem>
+						),
+					)}
 				</CarouselContent>
 				<CarouselPrevious className="hidden xl:flex" />
 				<CarouselNext className="hidden xl:flex" />

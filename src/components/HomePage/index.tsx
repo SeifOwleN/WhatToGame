@@ -33,6 +33,11 @@ const HomePage = () => {
 						search.get("search") as string,
 					);
 					setGame(gamesList);
+				} else if (search.get("series")) {
+					const gamesList = await gameServices.getGameSeries(
+						search.get("series") as number,
+					);
+					setGame(gamesList);
 				} else {
 					const gamesList = await gameServices.getNewGames();
 					setGame(gamesList);
