@@ -112,10 +112,3 @@ export interface Movie {
 		max: string;
 	};
 }
-
-interface MovieList {
-	count: number;
-	next: null | string; // You can replace `any` with the specific type if needed
-	previous: null | string; // You can replace `any` with the specific type if needed
-	results: Movie[];
-}
