@@ -26,14 +26,14 @@ const getGameStores = async (gameID: number) => {
 	return stores.data;
 };
 
-const getGameSeries = async (gameID: number) => {
+const getGameSeries = async (gameID: number | string) => {
 	const stores = await axios.get(
 		`https://rawg.io/api/games/${gameID}/game-series?key=732af35de7c848489a06ffe4343ee934`,
 	);
 	return stores.data;
 };
 
-const getGameVideo = async (gameID: number) => {
+const getGameVideo = async (gameID: number | string) => {
 	const vid = await axios
 		.get(`http://localhost:3000/api/video/${gameID}`)
 		.then((xdd) => xdd.data);

@@ -35,7 +35,7 @@ const HomePage = () => {
 					setGame(gamesList);
 				} else if (search.get("series")) {
 					const gamesList = await gameServices.getGameSeries(
-						search.get("series") as number,
+						search.get("series") as string,
 					);
 					setGame(gamesList);
 				} else {
