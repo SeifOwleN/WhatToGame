@@ -1,13 +1,22 @@
 import { SyntheticEvent, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
+import { FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useTheme } from "../theme-provider";
 import { Button } from "../ui/button";
+import {
+	NavigationMenu,
+	NavigationMenuContent,
+	NavigationMenuItem,
+	NavigationMenuList,
+	NavigationMenuTrigger,
+} from "../ui/navigation-menu";
 import SearchBar from "./search";
 
 const Navbar = () => {
 	const [search, setSearch] = useState<boolean>(false);
 	const [bar, setBar] = useState<boolean>(false);
-
+	const { setTheme, theme } = useTheme();
 	const toggleSearch = (e: SyntheticEvent) => {
 		e.preventDefault();
 		setSearch(!search);
@@ -72,13 +81,29 @@ const Navbar = () => {
 					id="RightSide"
 					className="flex-0 lg:block hidden font-inter dark:text-white text-xl"
 				>
-					<a className="mr-28" href="https://">
-						Placeholder
-					</a>
-					<a className="mr-28" href="https://">
-						Placeholder1
-					</a>
-					<Button className=" mr-10 px-6 py-3 rounded-lg">OwleN</Button>
+					<NavigationMenu>
+						<NavigationMenuList>
+							<NavigationMenuItem>
+								<NavigationMenuTrigger>PlaceHolder</NavigationMenuTrigger>
+								<NavigationMenuContent>
+									<ul className="flex">
+										<li>aloo</li>
+									</ul>
+								</NavigationMenuContent>
+							</NavigationMenuItem>
+						</NavigationMenuList>
+						<NavigationMenuItem>
+							<Button className=" mr-10 px-6 py-3 rounded-lg">OwleN</Button>
+						</NavigationMenuItem>
+						<NavigationMenuItem>
+							<Button
+								className="rounded-full bg-white hover:bg-gray-100 text-black"
+								onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+							>
+								<FaSun />
+							</Button>
+						</NavigationMenuItem>
+					</NavigationMenu>
 				</div>
 			</div>
 		</div>

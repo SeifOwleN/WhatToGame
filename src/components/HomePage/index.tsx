@@ -1,5 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {
+	FaAndroid,
+	FaApple,
+	FaPlaystation,
+	FaWindows,
+	FaXbox,
+} from "react-icons/fa";
 import { HiArrowUp } from "react-icons/hi2";
 import { useLocation } from "react-router-dom";
 import gameServices from "../../services/gameServices";
@@ -22,6 +29,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import GamesCards from "./gamesCards";
 
 const HomePage = () => {
@@ -30,12 +38,13 @@ const HomePage = () => {
 	const [sort, setSort] = useState<string | undefined>("added");
 	const [isEndOfPage, setIsEndOfPage] = useState(false);
 	const [topVisible, setTopVisible] = useState(false);
-
+	const [filter, setFilter] = useState<string[] | undefined>();
+	const search = new URLSearchParams(location.search);
+	const theGame = search.get("search");
 	// useEffect to fetch the searched games from the api when location changes
 	useEffect(() => {
 		const fun = async () => {
 			const search = new URLSearchParams(location.search);
-
 			try {
 				if (search.get("search")) {
 					const gamesList = await gameServices.getGame(
@@ -101,6 +110,13 @@ const HomePage = () => {
 		};
 	}, []);
 
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
+	};
+
 	// sort games select element
 	const SortMenu = () => {
 		return (
@@ -127,50 +143,58 @@ const HomePage = () => {
 		);
 	};
 
-	// const FilterPlatform = () => {
-	// 	return (
-	// 		<DropdownMenu>
-	// 			<DropdownMenuTrigger className="">
-	// 				<div className="w-20 bg-pink-700">xDDMRO</div>
-	// 			</DropdownMenuTrigger>
-	// 			<DropdownMenuContent>
-	// 				<DropdownMenuLabel>Playstation</DropdownMenuLabel>
-	// 				<DropdownMenuSeparator />
-	// 				<DropdownMenuGroup>
-	// 					<DropdownMenuCheckboxItem>Playstation</DropdownMenuCheckboxItem>
-	// 				</DropdownMenuGroup>
-	// 			</DropdownMenuContent>
-	// 		</DropdownMenu>
-	// 	);
-	// };
+	const FilterPlatform = () => {
+		return (
+			<ToggleGroup
+				type="multiple"
+				value={filter}
+				onValueChange={(e) => setFilter(e)}
+			>
+				<ToggleGroupItem value="playstation">
+					<FaPlaystation />
+				</ToggleGroupItem>
+				<ToggleGroupItem value="xbox">
+					<FaXbox />
+				</ToggleGroupItem>
+				<ToggleGroupItem value="pc">
+					<FaWindows />
+				</ToggleGroupItem>
+				<ToggleGroupItem value="ios">
+					<FaApple />
+				</ToggleGroupItem>
+				<ToggleGroupItem value="android">
+					<FaAndroid />
+				</ToggleGroupItem>
+			</ToggleGroup>
+		);
+	};
 
 	// function responsible of rendering the games
 	const renderGames = () => {
 		if (game) {
-			const search = new URLSearchParams(location.search);
-			const theGame = search.get("search");
 			return (
-				<div className="flex flex-col">
-					<div className="head flex justify-between">
-						<h2 className="text-3xl mb-10 inline font-inter font-bold">
-							{theGame ? `Search Results for: ${theGame}` : "Popular Games"}
-						</h2>
-						<div className="flex gap-40 items-center">{SortMenu()}</div>
-					</div>
-
-					<div className="flex flex-wrap">
-						{Object.entries(game?.results)
-							.sort(([, gameA], [, gameB]) => {
-								return sort === "released"
-									? new Date(gameB.released).getTime() -
-											new Date(gameA.released).getTime()
-									: // @ts-ignore
-									  gameB[sort] - gameA[sort];
-							})
-							.map(([key, value]) => (
-								<GamesCards key={key} games={value} />
-							))}
-					</div>
+				<div className="flex flex-wrap">
+					{Object.entries(game?.results)
+						.filter(([_, value]) => {
+							if (!filter || filter.length === 0) {
+								return true;
+							}
+							return filter.every((filterSlug) =>
+								value.parent_platforms.some(
+									(platform) => platform.platform.slug === filterSlug,
+								),
+							);
+						})
+						.sort(([, gameA], [, gameB]) => {
+							return sort === "released"
+								? new Date(gameB.released).getTime() -
+										new Date(gameA.released).getTime()
+								: // @ts-ignore
+								  gameB[sort] - gameA[sort];
+						})
+						.map(([key, value]) => (
+							<GamesCards key={key} games={value} />
+						))}
 				</div>
 			);
 		}
@@ -179,16 +203,20 @@ const HomePage = () => {
 		);
 	};
 
-	const scrollToTop = () => {
-		window.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
-	};
-
 	return (
 		<div className="flex flex-col sm:m-10 m-2 relative">
-			{renderGames()}{" "}
+			<div className="flex flex-col">
+				<div className="head flex justify-between">
+					<h2 className="text-3xl mb-10 inline font-inter font-bold">
+						{theGame ? `Search Results for: ${theGame}` : "Popular Games"}
+					</h2>
+					<div className="flex gap-20 items-center">
+						{FilterPlatform()}
+						{SortMenu()}
+					</div>
+				</div>
+				{renderGames()}
+			</div>
 			{topVisible && (
 				<button
 					type="button"

@@ -7,7 +7,7 @@ const GamesCards = ({ games }: { games: results }) => {
 	return (
 		<Link key={games.id} className="mt-10 sm:mr-10" to={`/game/${games.id}`}>
 			<Card className="sm:w-96 relative h-[350px] flex flex-col rounded-3xl overflow-hidden hover:transform hover:scale-110 transition-transform ">
-				<div className="absolute right-3 dark:mix-blend-difference z-10 top-2">
+				<div className="absolute right-3 dark:mix-blend-difference top-2">
 					<PlatformIcons games={games} />
 				</div>
 				<img
